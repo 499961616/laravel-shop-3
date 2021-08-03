@@ -17,3 +17,8 @@ Route::get('/', 'PagesController@root')->name('root');
 
 Auth::routes(['verify' => true]);
 
+
+Route::group(['middleware'=>['auth','verified']],function(){
+    //收货地址
+    Route::get('user_addresses','UserAddressesController@index')->name('user_addresses.index');
+});

@@ -34,13 +34,13 @@ Route::group(['middleware'=>['auth','verified']],function(){
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
 
     Route::redirect('/', '/products')->name('root');
-
     //商品详情
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
-
     //收藏的商品
     Route::get('products/favorites', 'ProductsController@favorites')->name('products.favorites');
+    //添加购物车
+    Route::post('cart', 'CartController@add')->name('cart.add');
 });
 
 

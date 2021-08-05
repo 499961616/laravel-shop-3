@@ -67,16 +67,16 @@ class ProductsController extends Controller
 
     }
 
-    public function favor(Product $product,Request $request)
+    public function favor(Product $product, Request $request)
     {
         $user = $request->user();
-
-        if ($user->favoriteProducts()->find($product->id)){
+        if ($user->favoriteProducts()->find($product->id)) {
             return [];
         }
 
         $user->favoriteProducts()->attach($product);
-        return  [];
+
+        return [];
     }
 
     public function disfavor(Product $product,Request $request)

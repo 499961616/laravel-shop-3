@@ -27,7 +27,6 @@ class ProductsController extends Controller
                     });
             });
         }
-
         // 是否有提交 order 参数，如果有就赋值给 $order 变量
         // order 参数用来控制商品的排序规则
         if ($order = $request->input('order', '')) {
@@ -40,7 +39,6 @@ class ProductsController extends Controller
                 }
             }
         }
-
         $products = $builder->paginate(16);
 
         return view('products.index', [
@@ -52,4 +50,13 @@ class ProductsController extends Controller
         ]);
     }
 
+
+    public function show(Product $product,Request $request)
+    {
+        if (!$product->on_sale){
+            throw  new \Exception('商品未上架');
+        }
+        return view('products.show',['product'=>$product]);
+
+    }
 }

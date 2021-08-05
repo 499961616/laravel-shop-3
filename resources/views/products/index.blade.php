@@ -31,9 +31,13 @@
                     <div class="row products-list">
                         @foreach($products as $product)
                             <div class="col-3 product-item">
+                                <a style="text-decoration: none" href="{{ route('products.show', ['product' => $product->id]) }}">
+
                                 <div class="product-content">
                                     <div class="top">
-                                        <div class="img"><img src="{{ $product->image_url }}" alt=""></div>
+                                        <div class="img">
+                                          <img src="{{ $product->image_url }}" alt="">
+                                        </div>
                                         <div class="price"><b>￥</b>{{ $product->price }}</div>
                                         <div class="title">{{ $product->title }}</div>
                                     </div>
@@ -42,6 +46,7 @@
                                         <div class="review_count">评价 <span>{{ $product->review_count }}</span></div>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         @endforeach
                     </div>

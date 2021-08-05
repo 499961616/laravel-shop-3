@@ -17,7 +17,9 @@ Route::get('/', 'PagesController@root')->name('root');
 
 Auth::routes(['verify' => true]);
 
-
+//    商品
+Route::get('products', 'ProductsController@index')->name('products.index');
+Route::get('products/{product}', 'ProductsController@show')->name('products.show');
 Route::group(['middleware'=>['auth','verified']],function(){
     //收货地址
     Route::get('user_addresses','UserAddressesController@index')->name('user_addresses.index');
@@ -32,5 +34,5 @@ Route::group(['middleware'=>['auth','verified']],function(){
     Route::delete('user_addresses/{user_address}', 'UserAddressesController@destroy')->name('user_addresses.destroy');
 
     Route::redirect('/', '/products')->name('root');
-    Route::get('products', 'ProductsController@index')->name('products.index');
+
 });

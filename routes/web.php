@@ -35,4 +35,6 @@ Route::group(['middleware'=>['auth','verified']],function(){
 
     Route::redirect('/', '/products')->name('root');
 
+    Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
+    Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
 });

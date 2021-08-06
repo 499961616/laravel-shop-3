@@ -14,7 +14,9 @@ class CartController extends Controller
     {
         $carItems = $request->user()->cartItems()->with(['productSku.product'])->get();
 
-        return view('cart.index', ['cartItems' => $carItems]);
+        $addresses = $request->user()->addresses()->orderBy('last_used_at', 'desc')->get();
+
+        return view('cart.index', ['cartItems' => $carItems, 'addresses' => $addresses]);
     }
 
     public function add(AddCartRequest $request)

@@ -22,7 +22,7 @@ class CloseOrder implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Order  $order,$delay)
+    public function __construct(Order $order,$delay)
     {
         $this->order = $order;
 

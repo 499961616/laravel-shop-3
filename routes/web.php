@@ -51,14 +51,9 @@ Route::group(['middleware'=>['auth','verified']],function(){
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     //订单详情
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
+    //支付宝支付订单
+    Route::get('payment/{order}/alipay','PaymentController@payByAlipay')->name('payment.alipay');
 
+    Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
 });
-
-Route::get('alipay',function (){
-
-    return app('alipay')->web([
-        'out_trade_no' => time(),
-        'total_amount' => '1',
-        'subject' => 'test subject - 测试',
-    ]);
-});
+Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');

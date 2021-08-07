@@ -24,6 +24,8 @@ Route::group([
 
     //订单
     $router->get('orders', 'OrdersController@index')->name('orders.index');
-//订单详情
+    //订单详情
     $router->get('orders/{order}', 'OrdersController@show')->name('orders.show');
+    //发货
+    $router->post('orders/{order}/ship', 'OrdersController@ship')->name('orders.ship');
 });

@@ -32,7 +32,7 @@ return [
     | services the application utilizes. Set this in your ".env" file.
     |
     */
-
+    'ngrok_url' => env('NGROK_URL'),
     'env' => env('APP_ENV', 'production'),
 
     /*

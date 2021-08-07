@@ -2,12 +2,14 @@
 
 return [
     'alipay' => [
-        'app_id'         => '',
-        'ali_public_key' => '',
-        'private_key'    => '',
-        'log'            => [
+
+        'app_id'         => env('ALIPAY_APP_ID'),
+        'ali_public_key' => env('ALIPAY_PUBLIC_KEY'),
+        'private_key'    => env('ALIPAY_PRIVATE_KEY'),
+         'log'            => [
             'file' => storage_path('logs/alipay.log'),
         ],
+
     ],
 
     'wechat' => [
@@ -20,4 +22,7 @@ return [
             'file' => storage_path('logs/wechat_pay.log'),
         ],
     ],
-];
+
+    ];
+
+

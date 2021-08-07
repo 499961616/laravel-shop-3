@@ -17,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('alipay',function (){
-            $config = config('pay.alipay');
-            $config['notify_url'] = route('payment.alipay.notify');
+            $config               = config('pay.alipay');
+            $config['notify_url'] = ngrok_url('payment.alipay.notify');
             $config['return_url'] = route('payment.alipay.return');
             if (app()->environment() !== 'production'){
                 $config['mode']  ='dev';

@@ -30,4 +30,6 @@ Route::group([
     $router->post('orders/{order}/ship', 'OrdersController@ship')->name('orders.ship');
     //处理退款申请
     $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('orders.handle_refund');
+    //优惠券
+    $router->get('coupon_codes', 'CouponCodesController@index');
 });

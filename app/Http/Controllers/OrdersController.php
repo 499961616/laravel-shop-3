@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderReviewed;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\SendReviewRequest;
 use App\Jobs\CloseOrder;
 use App\Models\Order;
 use App\Models\ProductSku;
@@ -41,7 +43,7 @@ class OrdersController extends Controller
         $this->authorize('own', $order);
         return view('orders.show',['order'=>$order->load(['items.productSku','items.product'])]);
     }
-
+    //收货
     public function received(Order $order,Request $request)
     {
         $this->authorize('own',$order);
@@ -56,5 +58,52 @@ class OrdersController extends Controller
         ]);
 // 返回订单信息
         return $order;
+    }
+    //展示评价
+    public function review(Order $order)
+    {
+        $this->authorize('own',$order);
+
+        // 判断是否已经支付
+        if (!$order->paid_at){
+            throw  new InvalidRequestException('该订单未支付，不可评价');
+        }
+
+        return view('orders.review',['order'=>$order->load(['items.productSku', 'items.product'])]);
+    }
+    //提交评价
+    public function sendReview(Order $order,SendReviewRequest $request)
+    {
+        // 校验权限
+        $this->authorize('own', $order);
+
+        if (!$order->paid_at){
+            throw new InvalidRequestException('该订单未支付，不可评价');
+        }
+
+        if ($order->reviewed){
+            throw new InvalidRequestException('该订单已评价，不可重复提交');
+        }
+
+        $reviews = $request->input('reviews');
+
+        DB::transaction(function ()use($reviews,$order){
+
+            foreach ($reviews as $review){
+                $orderItem = $order->items()->find($review['id']);
+
+                $orderItem->update([
+                    'rating'      => $review['rating'],
+                    'review'      => $review['review'],
+                    'reviewed_at' => Carbon::now(),
+                ]);
+            }
+            // 将订单标记为已评价
+            $order->update(['reviewed' => true]);
+        });
+
+        event(New OrderReviewed($order));
+
+            return redirect()->back();
     }
 }

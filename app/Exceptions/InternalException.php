@@ -16,7 +16,7 @@ class InternalException extends Exception
         parent::__construct($message, $code, $previous);
     }
 
-    public function handle(Request $request)
+    public function render(Request $request)
     {
         if ($request->expectsJson()) {
             return response()->json(['msg' => $this->msgForUser], $this->code);

@@ -29,11 +29,7 @@ class CloseOrder implements ShouldQueue
         $this->delay($delay);
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
+
 
     // 判断对应的订单是否已经被支付
     // 如果已经支付则不需要关闭订单，直接退出
@@ -48,8 +44,10 @@ class CloseOrder implements ShouldQueue
             $this->order->update(['closed'=>true]);
 
             foreach ($this->order->items as $item){
-
                 $item->productSku->addStock($item->amount);
+            }
+            if ($this->order->couponCode){
+                $this->order->couponCode->changeUsed(false);
             }
         });
     }

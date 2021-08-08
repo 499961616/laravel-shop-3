@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\CouponCode;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory

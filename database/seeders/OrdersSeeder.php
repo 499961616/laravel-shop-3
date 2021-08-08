@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class OrdersSeeder extends Seeder
 {
@@ -58,9 +59,9 @@ class OrdersSeeder extends Seeder
                     $query->whereNotNull('paid_at');
                 })
                 ->first([
-                    \DB::raw('count(*) as review_count'),
-                    \DB::raw('avg(rating) as rating'),
-                    \DB::raw('sum(amount) as sold_count'),
+                    DB::raw('count(*) as review_count'),
+                    DB::raw('avg(rating) as rating'),
+                    DB::raw('sum(amount) as sold_count'),
                 ]);
 
             $product->update([

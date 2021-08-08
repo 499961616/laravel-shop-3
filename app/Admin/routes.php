@@ -28,4 +28,6 @@ Route::group([
     $router->get('orders/{order}', 'OrdersController@show')->name('orders.show');
     //发货
     $router->post('orders/{order}/ship', 'OrdersController@ship')->name('orders.ship');
+    //处理退款申请
+    $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('orders.handle_refund');
 });
